@@ -106,7 +106,16 @@
       color: #888;
       line-height: 1.6;
     }
-
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+    }
+    
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 
@@ -115,12 +124,12 @@
 
   <div class="content">
 
-    <section class="hero">
+    <section class="hero fade-in">
       <h1>Masataka Saimyoji</h1>
       <p>Audio Reactive Visual Systems</p>
     </section>
 
-    <section class="works">
+    <section class="works fade-in">
   <h2>Works</h2>
 
   <div class="works-grid">
@@ -146,7 +155,7 @@
   </div>
 </section>
 
-    <section class="about">
+    <section class="about fade-in">
       <h2>About</h2>
       <p>
         音を構造として解析し、映像へと再構築することをテーマに制作しています。
@@ -154,7 +163,7 @@
       </p>
     </section>
 
-    <section class="contact">
+    <section class="contact fade-in">
       <h2>Contact</h2>
       <p>masataka@example.com</p>
     </section>
@@ -220,6 +229,22 @@
     }
 
     animate();
+    const fadeElements = document.querySelectorAll(".fade-in");
+
+    function checkFade() {
+      const triggerBottom = window.innerHeight * 0.85;
+    
+      fadeElements.forEach(el => {
+        const boxTop = el.getBoundingClientRect().top;
+    
+        if (boxTop < triggerBottom) {
+          el.classList.add("show");
+        }
+      });
+    }
+    
+    window.addEventListener("scroll", checkFade);
+    checkFade();
   </script>
 </body>
 </html>
