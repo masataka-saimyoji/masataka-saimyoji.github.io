@@ -4,67 +4,14 @@
   <meta charset="UTF-8">
   <title>Masataka Saimyoji</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      background-color: #0a0a0a;
-      color: #eaeaea;
-      font-family: 'Noto Sans JP', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    h1 {
-      font-size: 3rem;
-      letter-spacing: 3px;
-      margin: 0;
-    }
-    p {
-      color: #888;
-      margin-top: 20px;
-      letter-spacing: 2px;
-    }
-  </style>
-</head>
-<body>
-  <canvas id="bg"></canvas>
-
-  <div class="content">
-  <section class="hero">
-    <h1>Masataka Saimyoji</h1>
-    <p>Audio Reactive Visual Systems</p>
-  </section>
-
-  <section class="works">
-    <h2>Works</h2>
-    <div class="work-item">Project 01</div>
-    <div class="work-item">Project 02</div>
-    <div class="work-item">Project 03</div>
-  </section>
-
-  <section class="about">
-    <h2>About</h2>
-    <p>
-      音を構造として解析し、映像へと再構築することをテーマに制作しています。
-      DTMによる楽曲制作とリアクティブビジュアルを統合した作品制作を行っています。
-    </p>
-  </section>
-
-  <section class="contact">
-    <h2>Contact</h2>
-    <p>masataka@example.com</p>
-  </section>
-</div>
 
   <style>
     body {
       margin: 0;
-      overflow: hidden;
       background: #0a0a0a;
       color: #eaeaea;
       font-family: 'Noto Sans JP', sans-serif;
+      overflow-x: hidden;
     }
 
     canvas {
@@ -77,12 +24,17 @@
     .content {
       position: relative;
       z-index: 1;
-      height: 100vh;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 100px 20px;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     h1 {
@@ -91,73 +43,124 @@
       margin: 0;
     }
 
-    p {
-      color: #888;
-      margin-top: 20px;
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 40px;
       letter-spacing: 2px;
     }
+
+    p {
+      color: #aaa;
+      line-height: 1.8;
+      max-width: 600px;
+    }
+
+    .work-item {
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .work-item:hover {
+      border-color: rgba(255,255,255,0.4);
+      transform: translateX(10px);
+    }
+
   </style>
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+
+  <div class="content">
+
+    <section class="hero">
+      <h1>Masataka Saimyoji</h1>
+      <p>Audio Reactive Visual Systems</p>
+    </section>
+
+    <section class="works">
+      <h2>Works</h2>
+      <div class="work-item">Project 01</div>
+      <div class="work-item">Project 02</div>
+      <div class="work-item">Project 03</div>
+    </section>
+
+    <section class="about">
+      <h2>About</h2>
+      <p>
+        音を構造として解析し、映像へと再構築することをテーマに制作しています。
+        DTMによる楽曲制作とリアクティブビジュアルを統合した作品制作を行っています。
+      </p>
+    </section>
+
+    <section class="contact">
+      <h2>Contact</h2>
+      <p>masataka@example.com</p>
+    </section>
+
+  </div>
 
   <script>
-  const canvas = document.getElementById("bg");
-  const ctx = canvas.getContext("2d");
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
 
-  let width = canvas.width = window.innerWidth;
-  let height = canvas.height = window.innerHeight;
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
 
-  let mouseX = width / 2;
-  let mouseY = height / 2;
+    let mouseX = width / 2;
+    let mouseY = height / 2;
 
-  window.addEventListener("resize", () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  });
-
-  window.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  let particles = [];
-  let t = 0;
-
-  for (let i = 0; i < 80; i++) {
-    particles.push({
-      angle: Math.random() * Math.PI * 2,
-      radius: 150 + Math.random() * 100,
-      speed: 0.002 + Math.random() * 0.003
-    });
-  }
-
-  function animate() {
-    ctx.fillStyle = "rgba(10,10,10,0.2)";
-    ctx.fillRect(0, 0, width, height);
-
-    particles.forEach(p => {
-      p.angle += p.speed;
-
-      let baseX = width / 2 + Math.cos(p.angle) * p.radius;
-      let baseY = height / 2 + Math.sin(p.angle) * p.radius;
-
-      let dx = mouseX - baseX;
-      let dy = mouseY - baseY;
-      let dist = Math.sqrt(dx * dx + dy * dy);
-
-      let force = Math.max(0, 150 - dist) / 150;
-
-      let x = baseX - dx * force * 0.3;
-      let y = baseY - dy * force * 0.3;
-
-      ctx.beginPath();
-      ctx.arc(x, y, 2 + force * 4, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${0.05 + force * 0.3})`;
-      ctx.fill();
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     });
 
-    requestAnimationFrame(animate);
-  }
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
 
-  animate();
-</script>
+    let particles = [];
+
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        angle: Math.random() * Math.PI * 2,
+        radius: 150 + Math.random() * 100,
+        speed: 0.002 + Math.random() * 0.003
+      });
+    }
+
+    function animate() {
+      ctx.fillStyle = "rgba(10,10,10,0.2)";
+      ctx.fillRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        p.angle += p.speed;
+
+        let baseX = width / 2 + Math.cos(p.angle) * p.radius;
+        let baseY = height / 2 + Math.sin(p.angle) * p.radius;
+
+        let dx = mouseX - baseX;
+        let dy = mouseY - baseY;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+
+        let force = Math.max(0, 150 - dist) / 150;
+
+        let x = baseX - dx * force * 0.3;
+        let y = baseY - dy * force * 0.3;
+
+        ctx.beginPath();
+        ctx.arc(x, y, 2 + force * 4, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${0.05 + force * 0.3})`;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
