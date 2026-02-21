@@ -116,6 +116,16 @@
       opacity: 1;
       transform: translateY(0);
     }
+    .work-card {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+    
+    .work-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 
@@ -245,6 +255,24 @@
     
     window.addEventListener("scroll", checkFade);
     checkFade();
+    const workCards = document.querySelectorAll(".work-card");
+
+    function checkCards() {
+      const triggerBottom = window.innerHeight * 0.9;
+    
+      workCards.forEach((card, index) => {
+        const boxTop = card.getBoundingClientRect().top;
+    
+        if (boxTop < triggerBottom) {
+          setTimeout(() => {
+            card.classList.add("show");
+          }, index * 150);
+        }
+      });
+    }
+    
+    window.addEventListener("scroll", checkCards);
+    checkCards();
   </script>
 </body>
 </html>
