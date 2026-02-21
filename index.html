@@ -29,9 +29,99 @@
   </style>
 </head>
 <body>
-  <div>
+  <canvas id="bg"></canvas>
+
+  <div class="content">
     <h1>Masataka Saimyoji</h1>
     <p>Audio Reactive Visual Systems</p>
   </div>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #0a0a0a;
+      color: #eaeaea;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      letter-spacing: 3px;
+      margin: 0;
+    }
+
+    p {
+      color: #888;
+      margin-top: 20px;
+      letter-spacing: 2px;
+    }
+  </style>
+
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    let mouseX = width / 2;
+    let mouseY = height / 2;
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    let t = 0;
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < 50; i++) {
+        let x = width / 2 + Math.sin(t + i * 0.3) * 200;
+        let y = height / 2 + Math.cos(t + i * 0.3) * 200;
+
+        let dx = mouseX - x;
+        let dy = mouseY - y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+
+        let size = 2 + 100 / (dist + 50);
+
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,255,255,0.05)";
+        ctx.fill();
+      }
+
+      t += 0.01;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
