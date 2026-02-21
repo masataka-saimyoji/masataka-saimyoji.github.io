@@ -77,51 +77,65 @@
   </style>
 
   <script>
-    const canvas = document.getElementById("bg");
-    const ctx = canvas.getContext("2d");
+  const canvas = document.getElementById("bg");
+  const ctx = canvas.getContext("2d");
 
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
 
-    let mouseX = width / 2;
-    let mouseY = height / 2;
+  let mouseX = width / 2;
+  let mouseY = height / 2;
 
-    window.addEventListener("resize", () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+  window.addEventListener("resize", () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  let particles = [];
+  let t = 0;
+
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      angle: Math.random() * Math.PI * 2,
+      radius: 150 + Math.random() * 100,
+      speed: 0.002 + Math.random() * 0.003
+    });
+  }
+
+  function animate() {
+    ctx.fillStyle = "rgba(10,10,10,0.2)";
+    ctx.fillRect(0, 0, width, height);
+
+    particles.forEach(p => {
+      p.angle += p.speed;
+
+      let baseX = width / 2 + Math.cos(p.angle) * p.radius;
+      let baseY = height / 2 + Math.sin(p.angle) * p.radius;
+
+      let dx = mouseX - baseX;
+      let dy = mouseY - baseY;
+      let dist = Math.sqrt(dx * dx + dy * dy);
+
+      let force = Math.max(0, 150 - dist) / 150;
+
+      let x = baseX - dx * force * 0.3;
+      let y = baseY - dy * force * 0.3;
+
+      ctx.beginPath();
+      ctx.arc(x, y, 2 + force * 4, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${0.05 + force * 0.3})`;
+      ctx.fill();
     });
 
-    window.addEventListener("mousemove", (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
+    requestAnimationFrame(animate);
+  }
 
-    let t = 0;
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-
-      for (let i = 0; i < 50; i++) {
-        let x = width / 2 + Math.sin(t + i * 0.3) * 200;
-        let y = height / 2 + Math.cos(t + i * 0.3) * 200;
-
-        let dx = mouseX - x;
-        let dy = mouseY - y;
-        let dist = Math.sqrt(dx * dx + dy * dy);
-
-        let size = 2 + 100 / (dist + 50);
-
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,255,255,0.05)";
-        ctx.fill();
-      }
-
-      t += 0.01;
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  </script>
+  animate();
+</script>
 </body>
 </html>
