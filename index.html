@@ -66,6 +66,46 @@
       border-color: rgba(255,255,255,0.4);
       transform: translateX(10px);
     }
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+    }
+    
+    .work-card {
+      position: relative;
+      padding: 40px 30px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+    
+    .work-card:hover {
+      border-color: rgba(255,255,255,0.3);
+      transform: translateY(-10px);
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .work-number {
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    
+    .work-card h3 {
+      margin: 0 0 15px 0;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+    
+    .work-card p {
+      font-size: 0.9rem;
+      color: #888;
+      line-height: 1.6;
+    }
 
   </style>
 </head>
@@ -81,11 +121,30 @@
     </section>
 
     <section class="works">
-      <h2>Works</h2>
-      <div class="work-item">Project 01</div>
-      <div class="work-item">Project 02</div>
-      <div class="work-item">Project 03</div>
-    </section>
+  <h2>Works</h2>
+
+  <div class="works-grid">
+
+    <div class="work-card">
+      <div class="work-number">01</div>
+      <h3>Reactive Geometry</h3>
+      <p>FFT解析による円環構造の変形システム</p>
+    </div>
+
+    <div class="work-card">
+      <div class="work-number">02</div>
+      <h3>Frequency Landscape</h3>
+      <p>低域・中域・高域の分離による空間生成</p>
+    </div>
+
+    <div class="work-card">
+      <div class="work-number">03</div>
+      <h3>Noise Organism</h3>
+      <p>ノイズ場とマウスインタラクションの融合</p>
+    </div>
+
+  </div>
+</section>
 
     <section class="about">
       <h2>About</h2>
