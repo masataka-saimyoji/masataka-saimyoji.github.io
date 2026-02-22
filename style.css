@@ -1,0 +1,137 @@
+body {
+margin: 0;
+background: #0a0a0a;
+color: #eaeaea;
+font-family: 'Noto Sans JP', sans-serif;
+overflow-x: hidden;
+}
+
+canvas {
+position: fixed;
+top: 0;
+left: 0;
+z-index: 0;
+}
+
+.content {
+position: relative;
+z-index: 1;
+}
+
+section {
+min-height: 100vh;
+padding: 100px 20px;
+box-sizing: border-box;
+display: flex;
+flex-direction: column;
+justify-content: center;
+max-width: 900px;
+margin: 0 auto;
+}
+
+h1 {
+font-size: 3.5rem;
+letter-spacing: 6px;
+font-weight: 300;
+}
+
+h2 {
+font-size: 1.6rem;
+letter-spacing: 3px;
+font-weight: 400;
+}
+p {
+color: #aaa;
+line-height: 1.8;
+max-width: 600px;
+}
+
+.work-item {
+margin: 20px 0;
+padding: 20px;
+border: 1px solid rgba(255,255,255,0.1);
+transition: all 0.3s ease;
+}
+
+.work-item:hover {
+border-color: rgba(255,255,255,0.4);
+transform: translateX(10px);
+}
+.works-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 40px;
+}
+
+.work-card {
+position: relative;
+padding: 40px 30px;
+border: 1px solid rgba(255,255,255,0.06);
+background: rgba(255,255,255,0.04);
+backdrop-filter: blur(10px);
+transition: all 0.4s ease;
+cursor: pointer;
+border-radius: 8px;
+}
+
+.work-card:hover {
+border-color: rgba(255,255,255,0.2);
+transform: translateY(-10px);
+background: rgba(255,255,255,0.05);
+}
+
+.work-number {
+font-size: 0.8rem;
+letter-spacing: 2px;
+color: #666;
+margin-bottom: 20px;
+}
+
+.work-card h3 {
+margin: 0 0 15px 0;
+font-size: 1.2rem;
+letter-spacing: 1px;
+}
+
+.work-card p {
+font-size: 0.9rem;
+color: #888;
+line-height: 1.6;
+}
+.fade-in {
+opacity: 0;
+transform: translateY(40px);
+transition: all 1s ease;
+}
+
+.fade-in.show {
+opacity: 1;
+transform: translateY(0);
+}
+.work-card {
+opacity: 0;
+transform: translateY(40px);
+transition: all 0.8s ease;
+}
+
+.work-card.show {
+opacity: 1;
+transform: translateY(0);
+}
+.works {
+max-width: 1200px;
+}
+.works h2 {
+position: relative;
+margin-bottom: 60px;
+}
+
+.works h2::after {
+content: "";
+position: absolute;
+bottom: -20px;
+left: 0;
+width: 60px;
+height: 1px;
+background: rgba(255,255,255,0.3);
+}
