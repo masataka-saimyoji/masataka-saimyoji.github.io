@@ -28,7 +28,7 @@ speed: 0.002 + Math.random() * 0.003
 }
 
 function animate() {
-ctx.fillStyle = "rgba(10,10,10,0.2)";
+ctx.fillStyle = "rgba(255,255,255,0.15)";
 ctx.fillRect(0, 0, width, height);
 
 particles.forEach(p => {
@@ -48,8 +48,8 @@ let y = baseY - dy * force * 0.3;
 
 ctx.beginPath();
 ctx.arc(x, y, 2 + force * 4, 0, Math.PI * 2);
-ctx.fillStyle = `rgba(255,255,255,${0.05 + force * 0.3})`;
-ctx.fill();
+ctx.fillStyle = `rgba(0,0,0,${0.08 + force * 0.2})`;
+ctx.arc(x, y, 1.2 + force * 2, 0, Math.PI * 2);
 });
 
 requestAnimationFrame(animate);
